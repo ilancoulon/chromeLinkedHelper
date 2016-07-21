@@ -1,17 +1,17 @@
 (function() {
     'use strict';
 
-    $('a:contains("Se connecter")')
-        .css('background-color', '#59b76d')
-        .css('border-bottom', '3px solid #479257')
-        .css('background-image', 'none')
-        .click(function (event) {
-          event.preventDefault();
-          chrome.runtime.sendMessage({properties: ['tag', 'token']}, function(response) {
-            // Here we have access to our parameters
-            console.log(response.tag);
-            console.log(response.token);
+    chrome.runtime.sendMessage({type: 'parameters', properties: ['tag']}, function(response) {
+      $('a:contains("Se connecter")')
+          .css('background-color', '#59b76d')
+          .css('border-bottom', '3px solid #479257')
+          .css('background-image', 'none')
+          .append(' avec le tag "'+response.tag+'"')
+          .click(function (event) {
+            var pathArray = window.location.pathname.split('/');
+            var candidateId = pathArray[pathArray.length - 1];
+            chrome.runtime.sendMessage({type: 'connection', candidateId: candidateId});
           });
-          return false;
-        });
+    });
+
 })();
