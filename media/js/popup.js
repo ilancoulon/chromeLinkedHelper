@@ -1,7 +1,10 @@
 (function() {
     'use strict';
     $(document).ready(function() {
-      console.log('test');
+      chrome.runtime.sendMessage({type: 'parameters', properties: ['tag', 'token']}, function(response) {
+         $('#tagInput').val(response.tag);
+         $('#tokenInput').val(response.token);
+      });
       $('#settingsForm').submit(function (e) {
         e.preventDefault();
         console.log('test');
