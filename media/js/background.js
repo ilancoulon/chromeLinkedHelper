@@ -3,7 +3,7 @@ chrome.runtime.onMessage.addListener(
     switch (request.type) {
       case 'connection':
       chrome.storage.local.get(['token', 'tag'], function (items) {
-        var defer = $.post('https://api.getpro.co/candidates?token'+items.token, {
+        var defer = $.post('https://api.getpro.co/candidates?token='+items.token, {
           tag: items.tag,
           id: request.candidateId
         });
