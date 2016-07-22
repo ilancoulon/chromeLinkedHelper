@@ -8,7 +8,7 @@ chrome.runtime.onMessage.addListener(
           id: request.candidateId
         });
         defer.fail(function(data) {
-          alert('Error while trying to send the new candidate');
+          alert('Error while trying to send the new candidate, maybe you don\'t have the right token ?s');
           console.log(data);
         });
       });
