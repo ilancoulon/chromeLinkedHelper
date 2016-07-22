@@ -15,6 +15,22 @@ chrome.runtime.onMessage.addListener(
         break;
       case 'parameters':
         chrome.storage.local.get(request.properties, function (items) {
+          $.each(request.properties, function (index, value) {
+            // Gestion des valeurs par défaut
+            if (typeof items[value] == "undefined") {
+              switch (value) {
+                case "tag":
+                case "token":
+                  items[value] = "";
+                  break;
+                case "activated":
+                  items[value] = false;
+                  break;
+                default:
+
+              }
+            }
+          });
           sendResponse(items);
         });
         return true;
