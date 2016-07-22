@@ -12,7 +12,8 @@ chrome.runtime.onMessage.addListener(
       chrome.storage.local.get(['token', 'tag'], function (items) {
         var defer = $.post('https://api.getpro.co/candidates?token='+items.token, {
           tag: items.tag,
-          id: request.candidateId
+          FULL_NAME: request.parameters.fullName,
+          LINKEDIN_URL: request.parameters.linkedinURL
         });
         defer.fail(function(data) {
           alert('Error while trying to send the new candidate, maybe you don\'t have the right token ?s');
@@ -20,7 +21,7 @@ chrome.runtime.onMessage.addListener(
         });
       });
         break;
-        
+
       // Quand on souhaite accéder aux paramètres stockés dans le chrome.storage
       case 'parameters':
         chrome.storage.local.get(request.properties, function (items) {
