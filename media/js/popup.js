@@ -11,10 +11,11 @@
         return !$('#activatedCheckbox').prop("checked") || $('#tagInput').val() != "";
       };
 
-      chrome.runtime.sendMessage({type: 'parameters', properties: ['tag', 'token']}, function(response) {
+      chrome.runtime.sendMessage({type: 'parameters', properties: ['tag', 'token', 'activated']}, function(response) {
          $('#tagInput').val(response.tag);
          $('#tokenInput').val(response.token);
          $('#activatedCheckbox').prop("checked", response.activated);
+         $('#activatedCheckbox').trigger('change');
       });
       $('#settingsForm').submit(function (e) {
         e.preventDefault();
