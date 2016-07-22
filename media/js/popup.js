@@ -1,3 +1,9 @@
+/**
+ * popup.js
+ *
+ * Gestion, validation et soumission du formulaire des paramètres de l'application
+ */
+
 (function() {
     'use strict';
     $(document).ready(function() {

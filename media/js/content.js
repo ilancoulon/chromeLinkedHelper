@@ -1,3 +1,9 @@
+/**
+ * content.js
+ *
+ * Gestion et modification de la page en cours
+ */
+
 (function() {
     'use strict';
 
