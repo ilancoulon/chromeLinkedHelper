@@ -1,6 +1,10 @@
 (function() {
     'use strict';
     $(document).ready(function() {
+      var isFormValid = function() {
+        return !$('#activatedCheckbox').prop("checked") || $('#tagInput').val() != "";
+      };
+
       chrome.runtime.sendMessage({type: 'parameters', properties: ['tag', 'token']}, function(response) {
          $('#tagInput').val(response.tag);
          $('#tokenInput').val(response.token);
@@ -8,18 +12,25 @@
       });
       $('#settingsForm').submit(function (e) {
         e.preventDefault();
-        chrome.storage.local.set({
-          'activated': $('#activatedCheckbox').prop("checked"),
-          'tag': $('#tagInput').val(),
-          'token': $('#tokenInput').val()
-        }, function() {
-          window.close();
-        });
+        if (isFormValid()) {
+          chrome.storage.local.set({
+            'activated': $('#activatedCheckbox').prop("checked"),
+            'tag': $('#tagInput').val(),
+            'token': $('#tokenInput').val()
+          }, function() {
+            window.close();
+          });
+        }
+        else {
+          alert('Vous vous devez renseigner le tag.');
+        }
+
         return false;
       });
       $('#activatedCheckbox').change(function(event) {
         $('#tokenInput').prop("disabled", !$('#activatedCheckbox').prop("checked"));
         $('#tagInput').prop("disabled", !$('#activatedCheckbox').prop("checked"));
       });
+      $('#activatedCheckbox').trigger('change');
     });
 })();
