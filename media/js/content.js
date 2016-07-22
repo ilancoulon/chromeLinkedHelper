@@ -1,14 +1,14 @@
 /**
  * content.js
  *
- * Gestion et modification de la page en cours
+ * Gestion et modification de la page Linkedin (ajout d'évènements, changements d'aspect...)
  */
 
 (function() {
     'use strict';
 
     chrome.runtime.sendMessage({type: 'parameters', properties: ['tag', 'activated']}, function(response) {
-      if (response.activated) {
+      if (response.activated) { // On ne touche à rien si l'extension n'est pas activée
         $('a:contains("Se connecter")')
             .css('background-color', '#59b76d')
             .css('border-bottom', '3px solid #479257')

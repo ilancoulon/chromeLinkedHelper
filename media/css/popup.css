@@ -8,9 +8,22 @@ form {
 }
 header {
   height: 40px;
-  background-image: url('../img/getprolinkedin.png');
-  background-position: center;
-  background-repeat: no-repeat;
+  line-height: 40px;
+  text-align: center;
+}
+header img {
+  display: inline-block;
+}
+header .activatedCheckboxGroup {
+  display: inline-block;
+  margin-left: 5em;
+  height: 25px;
+  line-height: 25px;
+}
+header .activatedCheckboxGroup input {
+  position: relative;
+  top: 3px;
+  margin-left: 5px;
 }
 .buttons {
   text-align: center;
