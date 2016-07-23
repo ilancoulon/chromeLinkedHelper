@@ -25,7 +25,12 @@
             'tag': $('#tagInput').val(),
             'token': $('#tokenInput').val()
           }, function() {
-            window.close();
+            chrome.tabs.query({url: "https://www.linkedin.com/*"}, function (tabs) {
+              $.each(tabs, function(index, tab) {
+                chrome.tabs.reload(tab.id);
+              });
+              window.close();
+            });
           });
         }
         else {

@@ -11,7 +11,8 @@
     "default_title": "Paramètres pour la connexion avec getpro.co"
   },
   "permissions": [
-    "tabs", "https://www.linkedin.com/*",
+    "tabs",
+    "https://www.linkedin.com/*",
     "storage",
     "https://api.getpro.co/*"
   ],
