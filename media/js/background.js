@@ -4,6 +4,14 @@
  * Fonctions tilisables par l'ensemble des fichiers de l'extension sous forme d'envoi de message
  */
 
+ var localParams = [
+   "tag",
+   "activated"
+ ];
+ var distantParams = [
+   "token"
+ ];
+
 chrome.runtime.onMessage.addListener(
   function(request, sender, sendResponse) {
     switch (request.type) {
@@ -24,31 +32,37 @@ chrome.runtime.onMessage.addListener(
 
       // Quand on souhaite accéder aux paramètres stockés dans le chrome.storage
       case 'getParameters':
-        chrome.storage.local.get(request.properties, function (items) {
-          $.each(request.properties, function (index, value) {
-            // Gestion des valeurs par défaut
-            if (typeof items[value] == "undefined") {
-              switch (value) {
-                case "tag":
-                case "token":
-                  items[value] = "";
-                  break;
-                case "activated":
-                  items[value] = false;
-                  break;
-                default:
+        chrome.storage.sync.get(_.intersection(request.properties, distantParams), function(distItems) {
+          chrome.storage.local.get(_.intersection(request.properties, localParams), function (localItems) {
+            var items = _.extend(localItems, distItems);
+            $.each(request.properties, function (index, value) {
+              // Gestion des valeurs par défaut
+              if (typeof items[value] == "undefined") {
+                switch (value) {
+                  case "tag":
+                  case "token":
+                    items[value] = "";
+                    break;
+                  case "activated":
+                    items[value] = false;
+                    break;
+                  default:
 
+                }
               }
-            }
+            });
+            sendResponse(items);
           });
-          sendResponse(items);
         });
+
         return true;
 
       // Quand on souhaite modifier ces paramètres
       case 'setParameters':
-        chrome.storage.local.set(request.parameters, function() {
-          sendResponse(true);
+        chrome.storage.sync.set(_.pick(request.parameters, distantParams), function() {
+          chrome.storage.local.set(_.pick(request.parameters, localParams), function() {
+            sendResponse(true);
+          });
         });
         return true;
       default:

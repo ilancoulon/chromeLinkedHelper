@@ -17,7 +17,7 @@
     "https://api.getpro.co/*"
   ],
   "background": {
-    "scripts": ["bower_components/jquery/dist/jquery.min.js", "media/js/background.js"]
+    "scripts": ["bower_components/jquery/dist/jquery.min.js", "underscore.js", "media/js/background.js"]
   },
 
   "content_scripts": [
