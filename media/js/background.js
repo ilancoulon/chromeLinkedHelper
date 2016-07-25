@@ -23,7 +23,7 @@ chrome.runtime.onMessage.addListener(
         break;
 
       // Quand on souhaite accéder aux paramètres stockés dans le chrome.storage
-      case 'parameters':
+      case 'getParameters':
         chrome.storage.local.get(request.properties, function (items) {
           $.each(request.properties, function (index, value) {
             // Gestion des valeurs par défaut
@@ -42,6 +42,13 @@ chrome.runtime.onMessage.addListener(
             }
           });
           sendResponse(items);
+        });
+        return true;
+
+      // Quand on souhaite modifier ces paramètres
+      case 'setParameters':
+        chrome.storage.local.set(request.parameters, function() {
+          sendResponse(true);
         });
         return true;
       default:

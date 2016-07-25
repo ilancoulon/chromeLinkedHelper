@@ -22,7 +22,7 @@
       return parameters;
     };
 
-    chrome.runtime.sendMessage({type: 'parameters', properties: ['tag', 'activated']}, function(response) {
+    chrome.runtime.sendMessage({type: 'getParameters', properties: ['tag', 'activated']}, function(response) {
       if (response.activated) { // On ne touche à rien si l'extension n'est pas activée
         $('a:contains("Se connecter")')
             .css('background-color', '#59b76d')

@@ -11,7 +11,7 @@
         return !$('#activatedCheckbox').prop("checked") || $('#tagInput').val() != "";
       };
 
-      chrome.runtime.sendMessage({type: 'parameters', properties: ['tag', 'token', 'activated']}, function(response) {
+      chrome.runtime.sendMessage({type: 'getParameters', properties: ['tag', 'token', 'activated']}, function(response) {
          $('#tagInput').val(response.tag);
          $('#tokenInput').val(response.token);
          $('#activatedCheckbox').prop("checked", response.activated);
@@ -20,11 +20,11 @@
       $('#settingsForm').submit(function (e) {
         e.preventDefault();
         if (isFormValid()) {
-          chrome.storage.local.set({
+          chrome.runtime.sendMessage({type: 'setParameters', parameters: {
             'activated': $('#activatedCheckbox').prop("checked"),
             'tag': $('#tagInput').val(),
             'token': $('#tokenInput').val()
-          }, function() {
+          }} , function(response) {
             chrome.tabs.query({url: "https://www.linkedin.com/*"}, function (tabs) {
               $.each(tabs, function(index, tab) {
                 chrome.tabs.reload(tab.id);
