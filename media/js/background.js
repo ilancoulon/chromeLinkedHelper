@@ -18,13 +18,13 @@ chrome.runtime.onMessage.addListener(
       // Quand on a fait une connection sur Linkedin
       case 'connection':
       chrome.storage.local.get(['token', 'tag'], function (items) {
-        var defer = $.post('https://api.getpro.co/candidates?token='+items.token, {
+        var defer = $.post('http://192.168.0.89:5000/api?token='+items.token, {
           tag: items.tag,
           FULL_NAME: request.parameters.fullName,
           LINKEDIN_URL: request.parameters.linkedinURL
         });
         defer.fail(function(data) {
-          alert('Error while trying to send the new candidate, maybe you don\'t have the right token ?s');
+          alert('Error while trying to send the new candidate, maybe you don\'t have the right token ?');
           console.log(data);
         });
       });
